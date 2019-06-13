@@ -1,0 +1,20 @@
+CREATE TABLE Users(
+id int auto_increment primary key,
+name char(255) not null,
+login char(255) not null,
+password char(255) not null,
+e_mail char(255)
+balance int,
+discount double,
+);
+create table orders(
+
+);
+create table stock(
+
+);
+
+create table ordered_items(
+
+);
+
