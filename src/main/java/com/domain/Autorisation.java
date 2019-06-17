@@ -37,9 +37,16 @@ public class Autorisation {
                 System.out.println("User not found");
                 return "0";
             }
-            if (!password.equals(checkLogin.getString("PASSWORD"))) {
+            String dbPassword = null;
+            String tempId = null;
+            if (checkLogin.next()) {
+                dbPassword = checkLogin.getString("PASSWORD");
+                tempId = checkLogin.getString("ID");
+            }
+            if (!password.equals(dbPassword)) {
                 System.out.println("Password incorrect!");
-                return "0";
+            } else {
+                return tempId;
             }
 
         } catch (SQLException e) {
@@ -54,3 +61,5 @@ public class Autorisation {
         return true;
     }
 }
+
+
