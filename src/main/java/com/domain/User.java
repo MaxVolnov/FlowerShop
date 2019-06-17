@@ -1,7 +1,5 @@
 package com.domain;
 
-import org.omg.CORBA.UserException;
-
 import java.sql.*;
 
 public class User {
@@ -22,9 +20,9 @@ public class User {
     public User(String id) {
         try {
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from users WHERE id = " + id);
+            ResultSet rs = st.executeQuery("select * from users WHERE user_id = " + id);
             if (rs.next()) {
-                this.id = rs.getInt("ID");
+                this.id = rs.getInt("USER_ID");
                 this.login = rs.getString("LOGIN");
                 this.password = rs.getString("PASSWORD");
                 this.name = rs.getString("NAME");
@@ -32,7 +30,8 @@ public class User {
                 this.balance = rs.getInt("BALANCE");
                 this.discount = rs.getInt("DISCOUNT");
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -23,6 +23,11 @@ public class Autorisation {
         String userId = loginPasswordCorrectCheck();
         if (!userId.equals("0")) {
             User temp = new User(userId);
+            if (userId.equals("1")) {
+                temp.role = Role.ADMIN;
+            } else {
+                temp.role = Role.USER;
+            }
             return temp;
         }
         return null;
@@ -33,15 +38,15 @@ public class Autorisation {
             Connection recordConn = DBConnector.getInstance().getConnection();
             Statement loginExistCheck = recordConn.createStatement();
             ResultSet checkLogin = loginExistCheck.executeQuery("select * from users where login like '" + this.login + "%'");
-            if (checkLogin == null) {
+            if (checkLogin.equals(null)) {
                 System.out.println("User not found");
-                return "0";
+                return null;
             }
             String dbPassword = null;
             String tempId = null;
             if (checkLogin.next()) {
                 dbPassword = checkLogin.getString("PASSWORD");
-                tempId = checkLogin.getString("ID");
+                tempId = checkLogin.getString("USER_ID");
             }
             if (!password.equals(dbPassword)) {
                 System.out.println("Password incorrect!");
