@@ -20,26 +20,26 @@ public class Registration{
     public void registration(String name, String login, String password, String e_mail) {
         boolean userExist = checkUser(login);
         boolean nameCorrect = nameValidation(name);
-        boolean loginCorrect = nameValidation(login);
-        boolean passwordCorrect = nameValidation(password);
-        boolean mailCorrect = nameValidation(e_mail);
+        boolean loginCorrect = loginValidation(login);
+        boolean passwordCorrect = passwordValidation(password);
+        boolean mailCorrect = mailValidation(e_mail);
         if (!userExist && nameCorrect && loginCorrect && passwordCorrect && mailCorrect) {
-            // register();
+            insertAccount(login, password, name,  e_mail);
         }
     }
 
-    public boolean insertAccount(String name, String login, String password, String email) {
+    public boolean insertAccount(String login, String password, String name, String email) {
         try {
-            Connection recordConn = DBConnector.getInstance().getConnection();
-            PreparedStatement sti = recordConn.prepareStatement("insert into users (NAME, LOGIN, PASSWORD, E_MAIL, BALANCE, DISCOUNT) values (?, ?, ?, ?, 0, 0)");
-            sti.setString(1, name);
-            sti.setString(2, login);
-            sti.setString(3, password);
+            Connection accountRegistrConn = DBConnector.getInstance().getConnection();
+            PreparedStatement sti = accountRegistrConn.prepareStatement("insert into users (LOGIN, PASSWORD, NAME, E_MAIL, BALANCE, DISCOUNT) values (?, ?, ?, ?, 2000, 0)");
+            sti.setString(1, login);
+            sti.setString(2, password);
+            sti.setString(3, name);
             sti.setString(4, email);
             int raws = sti.executeUpdate();
-            recordConn.commit();
-        } catch (SQLException e) {
-
+            accountRegistrConn.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -51,33 +51,29 @@ public class Registration{
             ResultSet checkResult = loginExistCheck.executeQuery("select login from users");
             while (checkResult.next()) {
                 if (login == checkResult.getString("LOGIN")) {
-                    return false;
+                    return true;
                 }
             }
         } catch (SQLException e) {
 
         }
 
-        return true;
+        return false;
     }
 
     private boolean nameValidation(String name) {
-
         return true;
     }
 
     private boolean loginValidation(String login) {
-
         return true;
     }
 
     private boolean passwordValidation(String password) {
-
         return true;
     }
 
     private boolean mailValidation(String e_mail) {
-
         return true;
     }
 

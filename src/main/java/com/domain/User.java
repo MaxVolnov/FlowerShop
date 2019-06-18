@@ -1,5 +1,7 @@
 package com.domain;
 
+import com.exceptions.AccesException;
+
 import java.sql.*;
 
 public class User {
@@ -35,6 +37,16 @@ public class User {
         }
     }
 
+    public User(String login, String password, String name, String e_mail) {
+        this.role = Role.USER;
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.e_mail = e_mail;
+        this.balance = 0;
+        this.discount = 0.0;
+    }
+
     public int getId() {
         return id;
     }
@@ -50,6 +62,8 @@ public class User {
     public String getE_mail() {
         return e_mail;
     }
+
+    public String getPassword() { return password; }
 
     public Role getRole() {
         return role;
@@ -67,8 +81,13 @@ public class User {
         this.balance = balance;
     }
 
-    public void setDiscount(double discount) {
-        this.discount = discount;
+    public void setDiscount(double discount, User user, User admin) throws AccesException {
+        if (admin.role.equals(Role.ADMIN)) {
+            user.discount = discount;
+            System.out.println("Discount of " + user.name + " changed to " + user.discount);
+        } else {
+            throw new AccesException();
+        }
     }
 
     public void setPassword(String password) {

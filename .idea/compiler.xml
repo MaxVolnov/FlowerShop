@@ -9,8 +9,8 @@
         <module name="FlowerShop" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="10">
-      <module name="FlowerShop" target="10" />
+    <bytecodeTargetLevel target="6">
+      <module name="FlowerShop" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
