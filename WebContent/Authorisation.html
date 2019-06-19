@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <style>
+        @import "style.css"
+    </style>
+</head>
+<body>
+    <div>
+        <form method="post" action="/login/">
+            <table>
+                <tr>
+                    <td><label for="loginField">Логин</label></td>
+                    <td><input id="loginField" type="text" name="login"></td>
+                </tr>
+                <tr>
+                    <td><label for="passwordField">Пароль</label></td>
+                    <td><input id="passwordField" type="text" name="password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center"><input type="submit" value="Войти" onclik="Authorisation.authentication(loginField, passwordField)"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-allign: center"><input type="button" value="Регистрация" onclick="location.href=''"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
