@@ -5,15 +5,9 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <display-name>Welcome Page</display-name>
-    <servlet>
-        <servlet-name>AuthenticationServlet</servlet-name>
-        <servlet-class>com.domain.HelloServlet</servlet-class>
-    </servlet>
+    <display-name>Flower Shop</display-name>
 
-    <servlet-mapping>
-        <servlet-name>AuthenticationServlet</servlet-name>
-        <url-pattern>/welcome</url-pattern>
-    </servlet-mapping>
+
+
 
 </web-app>

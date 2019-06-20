@@ -1,12 +1,10 @@
 package com.domain;
 
-import com.exceptions.AccesException;
-
 public class Main {
 
     public static void main(String[] args) {
         DBConnector conn = DBConnector.getInstance();
-        Authorisation authorisation = new Authorisation("admin", "admin123");
+        /*Authorisation authorisation = new Authorisation("admin", "admin123");
         User loginAdmin = authorisation.authentication();
         System.out.println("Login sucsess! User ID: " + loginAdmin.getId() + ". User Name: " + loginAdmin.getName() + ". E-mail: " + loginAdmin.getE_mail());
         User registerUser = new User("user2", "user2", "user2", "user2@google.com");
@@ -21,7 +19,7 @@ public class Main {
         } catch (AccesException ae) {
             ae.printStackTrace();
         }
-
+*/
 
 
 

@@ -1,41 +1,22 @@
 package com.domain;
 
+import com.enums.Role;
 import com.exceptions.AccesException;
-
-import java.sql.*;
 
 public class User {
 
-    int id = 0;
-    String name = null;
-    String login = null;
-    String password = null;
-    String e_mail = null;
-    int balance = 0;
-    double discount = 0;
-    Role role = Role.USER;
-    Connection conn = DBConnector.getInstance().getConnection();
+    public int id = 0;
+    public String name = null;
+    public String login = null;
+    public String password = null;
+    public String e_mail = null;
+    public int balance = 0;
+    public double discount = 0;
+    public Role role = Role.USER;
 
-    public User() {
-    }
+    public User() {}
 
-    public User(String id) {
-        try {
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select * from users WHERE user_id = " + id);
-            if (rs.next()) {
-                this.id = rs.getInt("USER_ID");
-                this.login = rs.getString("LOGIN");
-                this.password = rs.getString("PASSWORD");
-                this.name = rs.getString("NAME");
-                this.e_mail = rs.getString("E_MAIL");
-                this.balance = rs.getInt("BALANCE");
-                this.discount = rs.getInt("DISCOUNT");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     public User(String login, String password, String name, String e_mail) {
         this.role = Role.USER;

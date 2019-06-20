@@ -1,5 +1,7 @@
 package com.domain;
 
+import com.dao.UserDAO;
+import com.enums.Role;
 import com.exceptions.LoginException;
 import com.exceptions.PasswordException;
 
@@ -22,11 +24,11 @@ public class Authorisation {
         this.password = password;
     }
 
-    public User authentication() {
+    public User authentication(String login, String password) {
         try {
             String userId = loginPasswordCorrectCheck();
             if (!userId.equals("0")) {
-                User temp = new User(userId);
+                User temp = UserDAO.userInfo(userId);
                 if (userId.equals("1")) {
                     temp.role = Role.ADMIN;
                 } else {
@@ -43,8 +45,8 @@ public class Authorisation {
 
     private String loginPasswordCorrectCheck() throws LoginException, PasswordException {
         try {
-            Connection recordConn = DBConnector.getInstance().getConnection();
-            Statement loginExistCheck = recordConn.createStatement();
+            Connection loginConn = DBConnector.getInstance().getConnection();
+            Statement loginExistCheck = loginConn.createStatement();
             ResultSet checkLogin = loginExistCheck.executeQuery("select * from users where login like '" + this.login + "%'");
             if (checkLogin.equals(null)) {
                 throw new LoginException();

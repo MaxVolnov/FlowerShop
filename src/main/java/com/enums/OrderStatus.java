@@ -1,4 +1,4 @@
-package com.domain;
+package com.enums;
 
 public enum OrderStatus {
     PLASED (0),
