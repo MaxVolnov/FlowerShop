@@ -28,8 +28,6 @@ public class AuthorisationServlet extends HttpServlet {
         request.getSession().setAttribute("user", user);
     }
 
-
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
