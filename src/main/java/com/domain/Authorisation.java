@@ -24,9 +24,9 @@ public class Authorisation {
         this.password = password;
     }
 
-    public User authentication(String login, String password) {
+    public static User authentication(String login, String password) {
         try {
-            String userId = loginPasswordCorrectCheck();
+            String userId = loginPasswordCorrectCheck(login, password);
             if (!userId.equals("0")) {
                 User temp = UserDAO.userInfo(userId);
                 if (userId.equals("1")) {
@@ -43,11 +43,11 @@ public class Authorisation {
         return null;
     }
 
-    private String loginPasswordCorrectCheck() throws LoginException, PasswordException {
+    private static String loginPasswordCorrectCheck(String login, String password) throws LoginException, PasswordException {
         try {
             Connection loginConn = DBConnector.getInstance().getConnection();
             Statement loginExistCheck = loginConn.createStatement();
-            ResultSet checkLogin = loginExistCheck.executeQuery("select * from users where login like '" + this.login + "%'");
+            ResultSet checkLogin = loginExistCheck.executeQuery("select * from users where login like '" + login + "%'");
             if (checkLogin.equals(null)) {
                 throw new LoginException();
             }

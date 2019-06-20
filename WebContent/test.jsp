@@ -8,20 +8,25 @@
     <title></title>
 </head>
 <body>
-
-<jsp:useBean id="portfolio" class="com.mainPackage.PortfolioBean" />
-<h1>Database result</h1>
-<%
-    java.util.Iterator folio = portfolio.getPortfolio();
-    Stock stock = null;
-%>
-
-<% while (folio.hasNext()) { %>
-<% stock = (Stock)folio.next(); %>
-
-<a href="#"><%=stock.getName() %></a>
-
-<% } %>
-
+<div>
+    <form method="post" action="/login/">
+        <table>
+            <tr>
+                <td><label for="loginField">?????</label></td>
+                <td><input id="loginField" type="text" name="login"></td>
+            </tr>
+            <tr>
+                <td><label for="passwordField">??????</label></td>
+                <td><input id="passwordField" type="text" name="password"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><input type="submit" value="?????" onclik="Authorisation.authentication(loginField, passwordField)"></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-allign: center"><input type="button" value="???????????" onclick="location.href=''"></td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>
