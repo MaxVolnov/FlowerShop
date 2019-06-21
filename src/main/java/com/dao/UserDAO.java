@@ -1,8 +1,6 @@
 package com.dao;
 
-import com.domain.DBConnector;
-import com.enums.Role;
-import com.domain.User;
+import com.entities.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,14 +8,14 @@ import java.sql.Statement;
 
 public class UserDAO {
 
-    int id = 0;
+    /*int id = 0;
     String name = null;
     String login = null;
     String password = null;
     String e_mail = null;
     int balance = 0;
     double discount = 0;
-    Role role = Role.USER;
+    Role role = Role.USER;*/
     static Connection conn = DBConnector.getInstance().getConnection();
 
     public static User userInfo(String id) {

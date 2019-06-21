@@ -6,5 +6,12 @@
          version="4.0">
 
     <display-name>Flower Shop</display-name>
-
+    <servlet>
+        <servlet-name>AuthorisationServlet</servlet-name>
+        <servlet-class>com.servlet.AuthorisationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AuthorisationServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
 </web-app>

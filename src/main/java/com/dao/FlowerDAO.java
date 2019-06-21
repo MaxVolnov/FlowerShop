@@ -1,7 +1,6 @@
 package com.dao;
 
-import com.domain.DBConnector;
-import com.domain.Flower;
+import com.entities.Flower;
 
 import javax.swing.*;
 import java.sql.Connection;

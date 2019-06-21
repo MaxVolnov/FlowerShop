@@ -1,4 +1,4 @@
-package com.domain;
+package com.entities;
 
 import com.enums.OrderStatus;
 

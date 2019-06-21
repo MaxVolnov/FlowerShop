@@ -1,6 +1,8 @@
 package com.dao;
 
-import com.domain.*;
+import com.entities.Flower;
+import com.entities.Order;
+import com.entities.User;
 import com.enums.OrderStatus;
 import com.enums.Role;
 import com.exceptions.LowBalanceException;

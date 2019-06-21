@@ -1,13 +1,26 @@
 package com.domain;
 
+import com.dao.DBConnector;
+import com.entities.User;
+import com.exceptions.LoginException;
+import com.exceptions.PasswordException;
+import com.functions.Authorisation;
+
 public class Main {
 
     public static void main(String[] args) {
         DBConnector conn = DBConnector.getInstance();
-        /*Authorisation authorisation = new Authorisation("admin", "admin123");
-        User loginAdmin = authorisation.authentication();
-        System.out.println("Login sucsess! User ID: " + loginAdmin.getId() + ". User Name: " + loginAdmin.getName() + ". E-mail: " + loginAdmin.getE_mail());
-        User registerUser = new User("user2", "user2", "user2", "user2@google.com");
+        Authorisation authorisation = new Authorisation();
+        try {
+            User loginAdmin = authorisation.authentication("admin", "admin123");
+            System.out.println("Login sucsess! User ID: " + loginAdmin.getId() + ". User Name: " + loginAdmin.getName() + ". E-mail: " + loginAdmin.getE_mail());
+        } catch (LoginException e) {
+            e.printStackTrace();
+        } catch (PasswordException e) {
+            e.printStackTrace();
+        }
+
+        /*User registerUser = new User("user2", "user2", "user2", "user2@google.com");
         Registration register = new Registration();
         register.registration(registerUser.login, registerUser.password, registerUser.name, registerUser.e_mail);
         Authorisation authorisation2 = new Authorisation("user2", "user2");
@@ -18,8 +31,8 @@ public class Main {
             loginUser2.setDiscount(0.2, loginUser2, loginUser2);
         } catch (AccesException ae) {
             ae.printStackTrace();
-        }
-*/
+        }*/
+
 
 
 

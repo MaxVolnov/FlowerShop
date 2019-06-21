@@ -8,14 +8,14 @@
 <body>
 <div>
     <header>LOGIN</header>
-    <form action="AuthorisationServlet" method="post">
+    <form action="/login" method="post">
         <input type="text" name="login" placeholder="login">
         <input type="text" name="password" placeholder="password">
         <br>
-        <button type="submit" name="Sign in" value="Sign in" charset="UTF-8">Sign in</button>
+        <button type="submit" name="Sign in" value="Sign in">Sign in</button>
     </form>
     <form action="registration.jsp">
-        <button type="submit" name="Sign up" value="Sign up" charset="UTF-8">Sign up</button>
+        <button type="submit" name="Sign up" value="Sign up">Sign up</button>
     </form>
 </div>
 </body>

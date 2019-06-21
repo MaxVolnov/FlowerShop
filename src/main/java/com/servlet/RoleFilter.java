@@ -1,7 +1,7 @@
 package com.servlet;
 
 
-import com.domain.User;
+import com.entities.User;
 import com.enums.Role;
 
 import javax.servlet.*;
