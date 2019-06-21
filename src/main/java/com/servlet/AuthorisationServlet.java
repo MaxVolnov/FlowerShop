@@ -31,9 +31,10 @@ public class AuthorisationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
+        System.out.println("Enter doGet");
         PrintWriter writer = response.getWriter();
         try {
-            writer.println("<h2>login/register page</h2>");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         } finally {
             writer.close();
         }
