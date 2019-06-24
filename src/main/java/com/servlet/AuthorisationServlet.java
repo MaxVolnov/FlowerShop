@@ -1,5 +1,7 @@
 package com.servlet;
 
+import com.dao.FlowerDAO;
+import com.entities.Flower;
 import com.functions.Authorisation;
 import com.entities.User;
 import com.enums.Role;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 
 public class AuthorisationServlet extends HttpServlet {
@@ -26,6 +29,10 @@ public class AuthorisationServlet extends HttpServlet {
             if (user.role == Role.ADMIN){
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             } else if (user.role == Role.USER){
+                response.setContentType("text/html");
+                ArrayList<Flower> catalog = FlowerDAO.getFlowerCatalog();
+                request.setAttribute("catalog", catalog);
+                getServletConfig().getServletContext().getRequestDispatcher("/user.jsp").forward(request,response);
                 request.getRequestDispatcher("user.jsp").forward(request, response);
             }
         } catch (LoginException e) {

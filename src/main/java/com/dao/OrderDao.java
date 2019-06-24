@@ -37,7 +37,7 @@ public class OrderDao {
         return order;
     }
 
-    public void setOrderStatus(int orderId, OrderStatus status, User user){
+    public void setOrderStatus(int orderId, OrderStatus status, User user) {
         int StatusCode = status.getCode();
         if (user.role.equals(Role.ADMIN)) {
             try {
@@ -59,42 +59,48 @@ public class OrderDao {
         if (balance <= orderTotalCost) {
             throw new LowBalanceException();
         }
-        try {
-            for (int i = 0; i < orderedFlowers.size(); i++) {
-                orderDetailsWrite(String.valueOf(user.getId()), orderedFlowers.get(i));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        java.util.Date date = new Date();
+        Date date = new Date();
         try {
             Connection orderWrite = DBConnector.getInstance().getConnection();
-            PreparedStatement sti = orderWrite.prepareStatement("insert into ORDERS (TOTAL_COST , DISCOUNT , DATE , STATUS ) values (?, ?, ?, 0)");
+            PreparedStatement sti = orderWrite.prepareStatement("insert into ORDERS (TOTAL_COST , DISCOUNT , DATE, USER_ID, STATUS) values (?, ?, ?, ?, 0)");
             sti.setString(1, String.valueOf(orderTotalCost));
             sti.setString(2, String.valueOf(user.getDiscount()));
             sti.setString(3, date.toString());
+            sti.setString(4, Integer.toString(user.getId()));
             int raws = sti.executeUpdate();
             orderWrite.commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select ORDER_ID from orders WHERE order_id = " + orderId);
+            if (rs.next()){
+                int orderId = rs.getInt("ORDER_ID");
+            }
+            for (int i = 0; i < orderedFlowers.size(); i++) {
+                orderDetailsWrite(String.valueOf(user.getId()), orderedFlowers.get(i), orderId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return OrderStatus.PLASED;
     }
 
-    public void orderDetailsWrite(String userId, Flower flower) throws SQLException {
+    public void orderDetailsWrite(String userId, Flower flower, int orderId) throws SQLException {
         Connection orderDetailConn = DBConnector.getInstance().getConnection();
-        PreparedStatement sti = orderDetailConn.prepareStatement("insert into ORDER_DETAILS (USER_ID, FLOWER_ID, AMOUNT) values (?, ?, ?)");
+        PreparedStatement sti = orderDetailConn.prepareStatement("insert into ORDER_DETAILS (USER_ID, FLOWER_ID, AMOUNT, ORDER_ID) values (?, ?, ?)");
         sti.setString(1, userId);
         sti.setString(2, String.valueOf(flower.getFlowerId()));
         sti.setString(3, String.valueOf(flower.getFlowerId()));
     }
 
-    public void orderDiscard(String orderId) throws SQLException{
+    public void orderDiscard(String orderId) throws SQLException {
 
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("delete from order_details WHERE order_id = " + orderId);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

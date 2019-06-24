@@ -14,7 +14,7 @@ public class FlowerDAO {
     String flowerName;
     int cost;
     int amount;
-    Connection conn = DBConnector.getInstance().getConnection();
+    static Connection conn = DBConnector.getInstance().getConnection();
 
     public Flower flowerInfo(Spring flowerId) {
         Flower flower = new Flower();
@@ -33,20 +33,18 @@ public class FlowerDAO {
         return flower;
     }
 
-    public ArrayList getFlowerCatalog() {
+    public static ArrayList getFlowerCatalog() {
         ArrayList<Flower> flowerCatalog = new ArrayList<Flower>();
         Flower tempFlower = new Flower();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select * from stock");
-            int i=0;
             while (rs.next()) {
-                tempFlower.setFlowerId(rs.getInt("FLOWERID"));
-                tempFlower.setFlowerName(rs.getString("FLOWERNAME"));
+                tempFlower.setFlowerId(rs.getInt("FLOWER_ID"));
+                tempFlower.setFlowerName(rs.getString("FLOWER_NAME"));
                 tempFlower.setCost(rs.getInt("COST"));
                 tempFlower.setAmount(rs.getInt("AMOUNT"));
                 flowerCatalog.add(tempFlower);
-                i++;
             }
         } catch (
                 SQLException e) {

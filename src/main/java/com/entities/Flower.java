@@ -1,15 +1,23 @@
 package com.entities;
 
-import com.dao.DBConnector;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import java.sql.Connection;
-
+@Entity
+@Table (name = "stock")
 public class Flower {
+
+    @Id
+    @Column (name="flower_id")
     int flowerId;
+    @Column (name="flower_name")
     String flowerName;
+    @Column
     int cost;
+    @Column
     int amount;
-    Connection conn = DBConnector.getInstance().getConnection();
 
     public Flower() {
     }

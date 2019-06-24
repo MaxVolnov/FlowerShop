@@ -3,14 +3,28 @@ package com.entities;
 import com.enums.Role;
 import com.exceptions.AccesException;
 
-public class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table (name = "users")
+public class User {
+    @Id
+    @Column (name = "user_id")
     public int id = 0;
+    @Column
     public String name = null;
+    @Column
     public String login = null;
+    @Column
     public String password = null;
+    @Column
     public String e_mail = null;
+    @Column
     public int balance = 0;
+    @Column
     public double discount = 0;
     public Role role = Role.USER;
 
@@ -28,9 +42,7 @@ public class User {
         this.discount = 0.0;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public String getName() {
         return name;
