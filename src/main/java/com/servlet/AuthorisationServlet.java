@@ -15,11 +15,6 @@ import java.io.PrintWriter;
 
 
 public class AuthorisationServlet extends HttpServlet {
-    private static String URL = "jdbc:h2:~/test";
-    private static String login = null;
-    private static String password = null;
-    private static final String select = "select * from users where user_id = &; ";
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
