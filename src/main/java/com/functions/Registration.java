@@ -2,22 +2,26 @@ package com.functions;
 
 import com.dao.RegistrationDAO;
 import com.exceptions.UserExistException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import static com.dao.RegistrationDAO.insertAccount;
-
+@Repository
 public class Registration{
 
-    public static boolean registration(String login, String password, String name, String e_mail) throws UserExistException {
-        boolean userExist = RegistrationDAO.checkUser(login);
+    @Autowired
+    RegistrationDAO registrationDAO;
+
+    public boolean registration(String login, String password, String name, String e_mail) throws UserExistException {
+        boolean userExist = registrationDAO.checkUser(login);
         if (userExist){
             throw new UserExistException();
         }
-        boolean nameCorrect = RegistrationDAO.nameValidation(name);
-        boolean loginCorrect = RegistrationDAO.loginValidation(login);
-        boolean passwordCorrect = RegistrationDAO.passwordValidation(password);
-        boolean mailCorrect = RegistrationDAO.mailValidation(e_mail);
+        boolean nameCorrect = registrationDAO.nameValidation(name);
+        boolean loginCorrect = registrationDAO.loginValidation(login);
+        boolean passwordCorrect = registrationDAO.passwordValidation(password);
+        boolean mailCorrect = registrationDAO.mailValidation(e_mail);
         if (!userExist && nameCorrect && loginCorrect && passwordCorrect && mailCorrect) {
-            boolean registered = insertAccount(login, password, name, e_mail);
+            boolean registered = registrationDAO.insertAccount(login, password, name, e_mail);
             return registered;
         }
         return false;
