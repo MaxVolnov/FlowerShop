@@ -13,13 +13,21 @@ public class Flower {
     @Column (name="flower_id")
     int flowerId;
     @Column (name="flower_name")
-    String flowerName;
+    String name;
     @Column
     int cost;
     @Column
     int amount;
 
     public Flower() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getFlowerId() {
@@ -35,7 +43,7 @@ public class Flower {
     }
 
     public void setFlowerName(String flowerName) {
-        this.flowerName = flowerName;
+        this.name = flowerName;
     }
 
     public void setCost(int cost) {
@@ -45,7 +53,7 @@ public class Flower {
 
 
     public String getFlowerName() {
-        return flowerName;
+        return name;
     }
 
     public int getCost() {

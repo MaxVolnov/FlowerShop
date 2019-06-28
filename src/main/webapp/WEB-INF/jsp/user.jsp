@@ -9,30 +9,37 @@
 </head>
 
 <body>
-
-    <form action="/user" method="get">
-        <%
-            ArrayList flowers = (ArrayList) request.getAttribute("catalog");
-            if (flowers != null) {
-                if (flowers.size()==0)
-                    out.print("Catalog is empty");
-                else {
-                    out.print("<TABLE border=1>");
-                    out.print("<TR><TD>Name</TD><TD>Cost</TD><TD>Amount</TD></TR>");
-
-                    for (int i = 0; i < flowers.size(); i++) {
-                        out.print("<TR>");
-                        Flower tempFlower = (Flower) flowers.get(i);
-                        out.print("<TD>" + tempFlower.getFlowerName()+ "</TD>");
-                        out.print("<TD>" + tempFlower.getCost()+ "</TD>");
-                        out.print("<TD>" + tempFlower.getAmount()+ "</TD>");
-                        //out.print("<TD>" + " <input type="number" min=0 max = >"+ tempFlower.getAmount() + "</TD>");
-                        out.print("</TR>");
-                    }
-                    out.print("</TABLE>");
-                }
-            }
-        %>
+<header>CATALOG</header>
+<div>
+    <input value="Cart" type="button" onclick="location.href='/cart'" />
+    <input value="Exit" type="button" onclick="location.href='/'" />
+    <jsp:useBean id="user" class="com.entities.User" scope="session"></jsp:useBean>
+    <input type="hidden" name="userId" value="${user.id}"/>
+    <c:out value="${user.name}"></c:out>
+</div>
+<div>
+    <form action="/user" method="POST">
+        <table border="1">
+            <tr>
+                <td>name</td>
+                <td>cost</td>
+                <td>amount</td>
+                <td>order</td>
+                <td></td>
+            </tr>
+            <c:forEach items="${catalog}" var="flower">
+                <jsp:useBean id="flower" class="com.entities.Flower" scope="session"></jsp:useBean>
+                <tr>
+                    <td><input type="hidden" name="flowerId" value="${flower.flowerId}"/>
+                    ${flower.name}</td>
+                    <td>${flower.cost}</td>
+                    <td>${flower.amount}</td>
+                    <td><input type="number" name="orderAmount" value="0" min=0 max=${flower.amount} size=100px></td>
+                    <td><input type="submit" value="Add to cart"></td>
+                </tr>
+            </c:forEach>
+        </table>
     </form>
+</div>
 </body>
 </html>

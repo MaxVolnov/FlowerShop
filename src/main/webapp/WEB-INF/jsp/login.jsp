@@ -6,7 +6,7 @@
 </head>
 
 <head>
-    <title>Hello Spring MVC</title>
+    <title>Login</title>
 </head>
 
 <body>
@@ -18,8 +18,8 @@
         <br>
         <button type="submit" name="Sign in" value="Sign in">Sign in</button>
     </form>
-    <form action="registration">
-        <button type="submit" name="Sign up" value="Sign up">Sign up</button>
+    <form action="/registration" class="inline">
+        <button>Sign up</button>
     </form>
 </div>
 </body>

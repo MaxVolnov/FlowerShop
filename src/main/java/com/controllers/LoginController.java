@@ -50,6 +50,7 @@ public class LoginController {
                 response.setContentType("text/html");
                 ArrayList<Flower> catalog = flowerDao.getFlowerCatalog();
                 request.setAttribute("catalog", catalog);
+                request.setAttribute("user", user);
                 return "user";
             }
         } catch (LoginException e) {

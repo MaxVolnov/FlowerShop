@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,16 +30,16 @@ public class FlowerDAOImpl implements FlowerDAO {
         }
     }
 
-    public Flower flowerInfo(Spring flowerId) {
+    public Flower flowerInfo(String flowerId) {
         Flower flower = new Flower();
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select * from stock WHERE flower_id = " + flowerId);
             if (rs.next()) {
-                this.flowerId = rs.getInt("FLOWERID");
-                this.flowerName = rs.getString("FLOWERNAME");
-                this.cost = rs.getInt("COST");
-                this.amount = rs.getInt("AMOUNT");
+                flower.setFlowerId(rs.getInt("FLOWER_ID"));
+                flower.setFlowerName(rs.getString("FLOWER_NAME"));
+                flower.setCost(rs.getInt("COST"));
+                flower.setAmount(rs.getInt("AMOUNT"));
             }
         } catch (
                 SQLException e) {
