@@ -2,7 +2,6 @@ package com.controllers;
 
 import com.dao.FlowerDAO;
 import com.dao.LoginDAO;
-import com.entities.Flower;
 import com.entities.User;
 import com.enums.Role;
 import com.exceptions.LoginException;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/")
@@ -48,11 +46,8 @@ public class LoginController {
                 session.setAttribute("user", user);
             }
             if (user.getRole() == Role.ADMIN){
-                response.sendRedirect("/admin");
+                return "admin";
             } else if (user.getRole() == Role.USER){
-                response.setContentType("text/html");
-                ArrayList<Flower> catalog = flowerDao.getFlowerCatalog();
-                request.setAttribute("catalog", catalog);
                 return "user";
             }
         } catch (LoginException e) {
