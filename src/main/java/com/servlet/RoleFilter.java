@@ -22,7 +22,7 @@ public class RoleFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         User user = (User) httpRequest.getSession().getAttribute("user");
-        if (user!= null && user.role == Role.ADMIN){
+        if (user != null && user.role == Role.ADMIN){
             httpResponse.sendRedirect("/admin");
         } else {
             httpResponse.sendRedirect("/user");

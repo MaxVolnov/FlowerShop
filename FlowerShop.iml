@@ -21,6 +21,7 @@
           <file>file://$MODULE_DIR$/WebContent/WEB-INF/Admin-servlet.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/Beans.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/Login-servlet.xml</file>
+          <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/Cart-servlet.xml</file>
         </fileset>
       </configuration>
     </facet>

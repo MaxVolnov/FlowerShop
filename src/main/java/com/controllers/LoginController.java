@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,26 +32,27 @@ public class LoginController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public String login(ModelMap model) throws ServletException, IOException {
+    public String login(ModelMap model){
         System.out.println("login");
        return ("login");
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    protected String doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected String doPost(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         PrintWriter writer = response.getWriter();
         try {
             User user = loginDAO.logining(login, password);
-            request.getSession().setAttribute("user", user);
-            if (user.role == Role.ADMIN){
-                return "admin";
-            } else if (user.role == Role.USER){
+            if (session.getAttribute("user")==null){
+                session.setAttribute("user", user);
+            }
+            if (user.getRole() == Role.ADMIN){
+                response.sendRedirect("/admin");
+            } else if (user.getRole() == Role.USER){
                 response.setContentType("text/html");
                 ArrayList<Flower> catalog = flowerDao.getFlowerCatalog();
                 request.setAttribute("catalog", catalog);
-                request.setAttribute("user", user);
                 return "user";
             }
         } catch (LoginException e) {

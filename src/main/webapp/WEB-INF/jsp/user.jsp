@@ -14,13 +14,15 @@
     <input value="Cart" type="button" onclick="location.href='/cart'" />
     <input value="Exit" type="button" onclick="location.href='/'" />
     <jsp:useBean id="user" class="com.entities.User" scope="session"></jsp:useBean>
-    <input type="hidden" name="userId" value="${user.id}"/>
+
     <c:out value="${user.name}"></c:out>
 </div>
 <div>
     <form action="/user" method="POST">
+        <input type="hidden" name="userId" value="${user.id}"/>
         <table border="1">
             <tr>
+                <td>id</td>
                 <td>name</td>
                 <td>cost</td>
                 <td>amount</td>
@@ -30,8 +32,8 @@
             <c:forEach items="${catalog}" var="flower">
                 <jsp:useBean id="flower" class="com.entities.Flower" scope="session"></jsp:useBean>
                 <tr>
-                    <td><input type="hidden" name="flowerId" value="${flower.flowerId}"/>
-                    ${flower.name}</td>
+                    <td id="${flower.flowerId}" name="flowerId"><input type="hidden" name="flowerId" value="${flower.flowerId}">${flower.flowerId}</td>
+                    <td>${flower.name}</td>
                     <td>${flower.cost}</td>
                     <td>${flower.amount}</td>
                     <td><input type="number" name="orderAmount" value="0" min=0 max=${flower.amount} size=100px></td>

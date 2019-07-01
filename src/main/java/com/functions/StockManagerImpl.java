@@ -29,6 +29,8 @@ public class StockManagerImpl implements StockManager {
 
     public Flower addToCart(int amount, int flowerId) {
         Flower orderedFlower = flowerDAO.flowerInfo(String.valueOf(flowerId));
+        orderedFlower.setAmount(amount);
+        cart.setTotalCost(cart.getTotalCost()+(orderedFlower.getCost()*amount));
         cart.setOrderedFlower(orderedFlower);
         return orderedFlower;
     }

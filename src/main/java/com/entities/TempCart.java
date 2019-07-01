@@ -2,18 +2,18 @@ package com.entities;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Repository
 public class TempCart implements Cart{
     private static TempCart instance;
     int userId;
-    List<Flower> orderedFlower;
+    double discount;
     int totalCost;
+    ArrayList<Flower> orderedFlower = new ArrayList<>();
 
-    public TempCart() {
+    public TempCart(){
     }
-
     @Override
     public TempCart getInstance() {
         if (instance == null){
@@ -30,7 +30,7 @@ public class TempCart implements Cart{
         this.userId = userId;
     }
 
-    public List<Flower> getOrderedFlower() {
+    public ArrayList<Flower> getOrderedFlower() {
         return orderedFlower;
     }
 
