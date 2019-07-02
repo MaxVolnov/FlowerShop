@@ -25,7 +25,7 @@ public class User{
     @Column
     public int balance = 0;
     @Column
-    public double discount = 0;
+    public int discount = 0;
     public Role role = Role.USER;
 
     public User() {}
@@ -39,7 +39,7 @@ public class User{
         this.name = name;
         this.e_mail = e_mail;
         this.balance = 0;
-        this.discount = 0.0;
+        this.discount = 0;
     }
 
     public int getId() { return id; }
@@ -74,7 +74,7 @@ public class User{
         this.balance = balance;
     }
 
-    public void setDiscount(double discount, User user, User admin) throws AccesException {
+    public void setDiscount(int discount, User user, User admin) throws AccesException {
         if (admin.role.equals(Role.ADMIN)) {
             user.discount = discount;
             System.out.println("Discount of " + user.name + " changed to " + user.discount);

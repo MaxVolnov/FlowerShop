@@ -13,12 +13,8 @@
         <input type="text" name="password" placeholder="Password"> <br>
         <input type="text" name="name" placeholder="Name"> <br>
         <input type="text" name="eMail" placeholder="E-mail"> <br>
-
-    <%
-        String url="http://localhost:8888/registration.jsp?login=user2&password=user2&name=user2&eMail=user2@gmail.com";
-        String onlyUrl=url.substring(0,url.lastIndexOf("?"));
-    %>
         <button type="submit" name="Sign up" value="Sign up" charset="UTF-8">Register</button>
+        <input value="Sign in" type="button" onclick="location.href='/'" />
     </form>
 </div>
 </body>

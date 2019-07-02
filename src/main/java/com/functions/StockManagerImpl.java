@@ -4,9 +4,12 @@ import com.dao.FlowerDAO;
 import com.dao.StockDAO;
 import com.entities.Cart;
 import com.entities.Flower;
+import com.entities.User;
 import com.exceptions.StockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpSession;
 
 @Repository
 public class StockManagerImpl implements StockManager {
@@ -27,12 +30,15 @@ public class StockManagerImpl implements StockManager {
         }
     }
 
-    public Flower addToCart(int amount, int flowerId) {
+    public void addToCart(int amount, int flowerId, Cart cart, HttpSession session) {
         Flower orderedFlower = flowerDAO.flowerInfo(String.valueOf(flowerId));
         orderedFlower.setAmount(amount);
-        cart.setTotalCost(cart.getTotalCost()+(orderedFlower.getCost()*amount));
+        User user = (User) session.getAttribute("user");
+        int totalCost = (int) Math.floor(cart.getTotalCost()+((orderedFlower.getCost()*amount))*((100-user.discount)/100));
+        cart.setTotalCost(totalCost);
         cart.setOrderedFlower(orderedFlower);
-        return orderedFlower;
+        session.setAttribute("totalCost", cart.getTotalCost());
+        return;
     }
 
 }

@@ -5,6 +5,8 @@ import com.dao.FlowerDAO;
 import com.dao.UserDAO;
 import com.entities.Cart;
 import com.entities.Flower;
+import com.entities.TempCart;
+import com.entities.User;
 import com.functions.StockManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,20 +37,21 @@ public class UserController {
         response.setContentType("text/html");
         ArrayList<Flower> catalog = flowerDAO.getFlowerCatalog();
         request.setAttribute("catalog", catalog);
+        User user = (User) session.getAttribute("user");
+        int balance = user.balance;
+        int discount = user.discount;
+        request.setAttribute("balance", balance);
+        request.setAttribute("discount", discount);
         return "user";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addToCart(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         int amount = Integer.valueOf(request.getParameter("orderAmount"));
         int flowerId = Integer.valueOf(request.getParameter("flowerId"));
-        String userId = String.valueOf(request.getParameter("userId"));
-        Flower addedFlower = stockManager.addToCart(amount, flowerId);
-        double discount = tempUser.userInfo(userId).discount;
-        request.setAttribute("totalCost", this.cart.getTotalCost());
-        ArrayList<Flower> userCart = (ArrayList) cart.getOrderedFlower();
-        request.setAttribute("userCart", userCart);
-        //response.sendRedirect("/cart");
+        TempCart cart = (TempCart) session.getAttribute("cart");
+        stockManager.addToCart(amount, flowerId, cart, session);
+        response.sendRedirect("/cart");
         return "cart";
     }
 }

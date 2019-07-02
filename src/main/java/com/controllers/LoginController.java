@@ -2,6 +2,7 @@ package com.controllers;
 
 import com.dao.FlowerDAO;
 import com.dao.LoginDAO;
+import com.entities.TempCart;
 import com.entities.User;
 import com.enums.Role;
 import com.exceptions.LoginException;
@@ -29,6 +30,7 @@ public class LoginController {
     LoginDAO loginDAO;
 
 
+
     @RequestMapping(method = RequestMethod.GET)
     public String login(ModelMap model){
         System.out.println("login");
@@ -46,8 +48,15 @@ public class LoginController {
                 session.setAttribute("user", user);
             }
             if (user.getRole() == Role.ADMIN){
+                response.sendRedirect("/admin");
                 return "admin";
             } else if (user.getRole() == Role.USER){
+
+                if (session.getAttribute("cart")==null){
+                    TempCart cart = new TempCart();
+                    session.setAttribute("cart", cart);
+                }
+                response.sendRedirect("/user");
                 return "user";
             }
         } catch (LoginException e) {
