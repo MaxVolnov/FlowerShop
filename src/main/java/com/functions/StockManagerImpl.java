@@ -4,6 +4,7 @@ import com.dao.FlowerDAO;
 import com.dao.StockDAO;
 import com.entities.Cart;
 import com.entities.Flower;
+import com.entities.TempCart;
 import com.entities.User;
 import com.exceptions.StockException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,16 @@ public class StockManagerImpl implements StockManager {
         }
     }
 
-    public void addToCart(int amount, int flowerId, Cart cart, HttpSession session) {
+    public void addToCart(int amount, int flowerId, HttpSession session) {
         Flower orderedFlower = flowerDAO.flowerInfo(String.valueOf(flowerId));
         orderedFlower.setAmount(amount);
+        TempCart cart = (TempCart) session.getAttribute("cart");
         User user = (User) session.getAttribute("user");
-        int totalCost = (int) Math.floor(cart.getTotalCost()+((orderedFlower.getCost()*amount))*((100-user.discount)/100));
+        int totalCost = (int) Math.floor(cart.getTotalCost()+((orderedFlower.getCost()*amount))*((100-user.discount)/100.d));
         cart.setTotalCost(totalCost);
         cart.setOrderedFlower(orderedFlower);
         session.setAttribute("totalCost", cart.getTotalCost());
+        session.setAttribute("cart", cart);
         return;
     }
 

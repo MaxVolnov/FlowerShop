@@ -53,7 +53,7 @@ public class LoginController {
             } else if (user.getRole() == Role.USER){
 
                 if (session.getAttribute("cart")==null){
-                    TempCart cart = new TempCart();
+                    TempCart cart = new TempCart(session);
                     session.setAttribute("cart", cart);
                 }
                 response.sendRedirect("/user");

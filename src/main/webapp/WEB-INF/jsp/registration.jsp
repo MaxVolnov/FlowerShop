@@ -8,6 +8,7 @@
 <body>
 <div>
     <header>REGISTRATION</header>
+    <c:out value="${message}"></c:out><br>
     <form action="/registration" method="post"> <br>
         <input type="text" name="login" placeholder="Login"> <br>
         <input type="text" name="password" placeholder="Password"> <br>

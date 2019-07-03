@@ -6,6 +6,7 @@ import com.entities.User;
 import com.enums.OrderStatus;
 import com.exceptions.LowBalanceException;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,9 +15,13 @@ public interface OrderDAO {
 
     public void setOrderStatus(int orderId, OrderStatus status, User user);
 
-    public OrderStatus placeOrder(ArrayList<Flower> orderedFlowers, User user) throws LowBalanceException ;
+    public OrderStatus placeOrder(HttpSession session) throws LowBalanceException ;
 
     public void orderDetailsWrite(String userId, Flower flower, int orderId) throws SQLException;
 
     public void orderDiscard(String orderId) throws SQLException ;
+
+    public ArrayList<Order> getOrdersList(HttpSession session);
+
+    public void takeFlowers (Flower flower);
 }

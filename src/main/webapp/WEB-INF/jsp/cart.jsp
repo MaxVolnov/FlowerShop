@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -14,14 +13,14 @@
 </head>
 <body>
 <div>
-    <header action="/cart" method="get">CART</header><br>
-    <input value="Catalog" type="button" onclick="location.href='/user'" />
+    <header action="/cart" method="get">CART</header>
+    <br>
+    <input value="Catalog" type="button" onclick="location.href='/user'"/>
     <form action="/exit" method="get">
         <input value="Exit" type="submit"/>
     </form>
 </div>
 <table border="1">
-
     <tr>
         <td>Flower</td>
         <td>Cost</td>
@@ -31,7 +30,8 @@
         <jsp:useBean id="flower" class="com.entities.Flower" scope="session"></jsp:useBean>
         <tr>
             <form action="/cart" method="post">
-                <td id="${flower.flowerId}" name="flowerId"><input type="hidden" name="flowerId" value="${flower.flowerId}">${flower.name}</td>
+                <td id="${flower.flowerId}" name="flowerId"><input type="hidden" name="flowerId"
+                                                                   value="${flower.flowerId}">${flower.name}</td>
                 <td>${flower.cost}</td>
                 <td><input type="hidden" name="amount" value="${flower.amount}">${flower.amount}</td>
                 <td><input type="submit" value="Remove"></td>
@@ -41,11 +41,14 @@
     <tr>
         <td>Total cost =</td>
         <td>
-        <c:out value="${totalCost}"></c:out>
+            <c:out value="${totalCost}"></c:out>
+        </td>
+        <td colspan="2" align="center" rowspan="1">
+            <form action="/order" method="post">
+                <input type="submit" value="Confirm order">
+            </form>
         </td>
     </tr>
 </table>
-
 </body>
-
 </html>

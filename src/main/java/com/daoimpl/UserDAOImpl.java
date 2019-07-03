@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import javax.servlet.http.HttpSession;
+import java.sql.*;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -42,5 +41,20 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public void purchasePayment (HttpSession session) {
+        int payment = (int) session.getAttribute("totalCost");
+        User user = (User) session.getAttribute("user");
+        user.balance = user.balance - payment;
+        try {
+            PreparedStatement sti = conn.prepareStatement("insert into USERS (BALANCE ) values (?)");
+            sti.setInt(1, user.balance);
+            conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        session.setAttribute("user", user);
+        return;
     }
 }

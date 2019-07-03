@@ -2,13 +2,14 @@ package com.controllers;
 
 
 import com.dao.FlowerDAO;
+import com.dao.OrderDAO;
 import com.dao.UserDAO;
 import com.entities.Cart;
 import com.entities.Flower;
-import com.entities.TempCart;
 import com.entities.User;
 import com.functions.StockManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,8 @@ public class UserController {
     UserDAO tempUser;
     @Autowired
     FlowerDAO flowerDAO;
+    @Autowired
+    OrderDAO order;
 
     @RequestMapping(method = RequestMethod.GET)
     public String login(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {  //перенести формирование всех элементов из loginController, затем сделать редирект внутри doget
@@ -42,6 +45,8 @@ public class UserController {
         int discount = user.discount;
         request.setAttribute("balance", balance);
         request.setAttribute("discount", discount);
+        ArrayList<Order> orders = (ArrayList) order.getOrdersList(session);
+        request.setAttribute("orders", orders);
         return "user";
     }
 
@@ -49,8 +54,7 @@ public class UserController {
     public String addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         int amount = Integer.valueOf(request.getParameter("orderAmount"));
         int flowerId = Integer.valueOf(request.getParameter("flowerId"));
-        TempCart cart = (TempCart) session.getAttribute("cart");
-        stockManager.addToCart(amount, flowerId, cart, session);
+        stockManager.addToCart(amount, flowerId, session);
         response.sendRedirect("/cart");
         return "cart";
     }

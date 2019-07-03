@@ -21,7 +21,7 @@ public class TempCart implements Cart{
         User user = (User) session.getAttribute("user");
         userId = user.id;
         discount = user.discount;
-        orderedFlower = null;
+        orderedFlower = new ArrayList<>();
     }
     @Override
     public TempCart getInstance() {

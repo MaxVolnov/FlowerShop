@@ -35,7 +35,10 @@
                 <jsp:useBean id="flower" class="com.entities.Flower" scope="session"></jsp:useBean>
                 <tr>
                     <form action="/user" method="post">
-                    <td id="${flower.flowerId}" name="flowerId"><input type="hidden" name="flowerId" value="${flower.flowerId}">${flower.name}</td>
+                    <td>
+                        <input type="hidden" name="flowerId" value="${flower.flowerId}">
+                            ${flower.name}
+                    </td>
                     <td>${flower.cost}</td>
                     <td>${flower.amount}</td>
                     <td><input type="number" name="orderAmount" value="0" min=0 max=${flower.amount} size=100px></td>
@@ -44,7 +47,32 @@
                 </tr>
             </c:forEach>
         </table>
-
+</div>
+<div>
+    <header>ORDERS</header>
+    <table border="2">
+        <tr>
+            <td>id</td>
+            <td>date</td>
+            <td>total cost</td>
+            <td>status</td>
+        </tr>
+        <c:forEach items="${orders}" var="order">
+            <jsp:useBean id="order" class="com.entities.Order" scope="session"></jsp:useBean>
+            <tr>
+                <form action="/payment" method="post">
+                    <td>
+                        <input type="hidden" name="flowerId" value="${order.orderId}">
+                            ${order.orderId}
+                    </td>
+                    <td>${order.date}</td>
+                    <td>${order.totalCost}</td>
+                    <td>${order.status}</td>
+                    <td><input type="submit" value="Payment"></td>
+                </form>
+            </tr>
+        </c:forEach>
+    </table>
 </div>
 </body>
 </html>

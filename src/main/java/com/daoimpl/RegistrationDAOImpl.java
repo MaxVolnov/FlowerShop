@@ -2,6 +2,7 @@ package com.daoimpl;
 
 import com.dao.DBConnector;
 import com.dao.RegistrationDAO;
+import com.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,13 +21,13 @@ public class RegistrationDAOImpl implements RegistrationDAO {
             conn = connector.getInstance().getConnection();
         }
     }
-    public boolean insertAccount(String login, String password, String name, String email) {
+    public boolean insertAccount(User user) {
         try {
-            PreparedStatement sti = conn.prepareStatement("insert into users (LOGIN, PASSWORD, NAME, E_MAIL, BALANCE, DISCOUNT) values (?, ?, ?, ?, 2000, 0)");
-            sti.setString(1, login);
-            sti.setString(2, password);
-            sti.setString(3, name);
-            sti.setString(4, email);
+            PreparedStatement sti = conn.prepareStatement("insert into users (LOGIN, PASSWORD, NAME, E_MAIL, BALANCE, DISCOUNT) values (?, ?, ?, ?, 2000, 5)");
+            sti.setString(1, user.login);
+            sti.setString(2, user.password);
+            sti.setString(3, user.name);
+            sti.setString(4, user.e_mail);
             int raws = sti.executeUpdate();
             conn.commit();
         } catch (Exception e) {

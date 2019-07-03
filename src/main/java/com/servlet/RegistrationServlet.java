@@ -1,7 +1,8 @@
 package com.servlet;
 
+import com.entities.User;
 import com.exceptions.UserExistException;
-import com.functions.Registration;
+import com.functions.RegistrationImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
@@ -14,16 +15,17 @@ import java.io.IOException;
 public class RegistrationServlet extends HttpServlet {
 
     @Autowired
-    Registration registration;
+    RegistrationImpl registrationImpl;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String eMail = request.getParameter("eMail");
+        User registrant = new User(login, password, name, eMail);
         System.out.println("data received");
         try {
-            boolean success = registration.registration(login, password, name, eMail);
+            boolean success = registrationImpl.registration(registrant);
             if (success) {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }

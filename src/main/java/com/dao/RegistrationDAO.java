@@ -1,8 +1,10 @@
 package com.dao;
 
+import com.entities.User;
+
 public interface RegistrationDAO {
 
-    public boolean insertAccount(String login, String password, String name, String email);
+    public boolean insertAccount(User user);
 
     public boolean checkUser(String login) ;
 

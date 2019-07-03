@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Entity
 @Table (name="orders")
@@ -19,7 +18,7 @@ public class Order {
     @Column
     int discount;
     @Column (name="date")
-    Date orderDate;
+    String date;
     @Column (name="user_id")
     int userId;
     @Column
@@ -28,8 +27,8 @@ public class Order {
 
     public Order() {}
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setOrderId(int orderId) {
@@ -52,8 +51,8 @@ public class Order {
         return totalCost;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public String getDate() {
+        return date;
     }
 
     public OrderStatus getStatus() {
