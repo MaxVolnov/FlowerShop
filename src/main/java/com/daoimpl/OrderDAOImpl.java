@@ -87,7 +87,7 @@ public class OrderDAOImpl implements OrderDAO {
         }
         try {
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT ORDER_ID  FROM ORDERS ORDER BY ORDER_ID  DESC LIMIT 1");
+            ResultSet rs = st.executeQuery("SELECT ORDER_ID  FROM ORDERS ORDER BY ORDER_ID  DESC LIMIT 1"); //sequence или сделай уже гибернейт, блин
             if (rs.next()) {
                 int orderId = rs.getInt("order_id");
                 for (int i = 0; i < cart.getOrderedFlower().size(); i++) {
