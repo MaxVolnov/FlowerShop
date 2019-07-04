@@ -31,16 +31,10 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.POST)
     public void orderPlace (HttpServletRequest request, HttpServletResponse response, HttpSession session) throws LowBalanceException, IOException {
         order.placeOrder(session);
-
         TempCart cart = (TempCart) session.getAttribute("cart");
         cart.getOrderedFlower().clear();
         cart.setTotalCost(0);
         session.setAttribute("cart", cart);
-
-       // user.purchasePayment(session);
-       // session.setAttribute("orders", order.getOrdersList(session));
-
-        //проверить наличие атрибута "заказ" в сессии. Если нет сосдать Ордер. записать в него все, положить в сессию
         response.sendRedirect("/user");
     }
 }

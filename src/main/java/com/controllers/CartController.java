@@ -35,7 +35,9 @@ public class CartController {
     public void removeFromCart(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
         int flowerId = Integer.valueOf(request.getParameter("flowerId"));
         int amount = Integer.valueOf(request.getParameter("amount"));
-        int flowerCost = Integer.valueOf(flowerDAO.flowerInfo(String.valueOf(flowerId)).getCost())*amount;
+        User user = (User) session.getAttribute("user");
+        double discount = ((100-user.discount)/100.d);
+        int flowerCost = (int) Math.floor(flowerDAO.flowerInfo(String.valueOf(flowerId)).getCost()*amount*discount);
         int totalCost = (int) session.getAttribute("totalCost");
         session.setAttribute("totalCost", totalCost-flowerCost);
         removeFromSession(session, Integer.valueOf(request.getParameter("flowerId")), totalCost-flowerCost);

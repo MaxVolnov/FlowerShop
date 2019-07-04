@@ -41,6 +41,8 @@ public class UserController {
         ArrayList<Flower> catalog = flowerDAO.getFlowerCatalog();
         request.setAttribute("catalog", catalog);
         User user = (User) session.getAttribute("user");
+        String userId = String.valueOf(user.getId());
+        user = (User) tempUser.userInfo(userId);
         int balance = user.balance;
         int discount = user.discount;
         request.setAttribute("balance", balance);
@@ -54,6 +56,10 @@ public class UserController {
     public String addToCart(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         int amount = Integer.valueOf(request.getParameter("orderAmount"));
         int flowerId = Integer.valueOf(request.getParameter("flowerId"));
+        if (amount<1){
+            response.sendRedirect("/user");
+            return "user";
+        }
         stockManager.addToCart(amount, flowerId, session);
         response.sendRedirect("/cart");
         return "cart";

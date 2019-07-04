@@ -7,7 +7,6 @@ import com.entities.Order;
 import com.entities.TempCart;
 import com.entities.User;
 import com.enums.OrderStatus;
-import com.enums.Role;
 import com.exceptions.LowBalanceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -55,17 +54,16 @@ public class OrderDAOImpl implements OrderDAO {
         return order;
     }
 
-    public void setOrderStatus(int orderId, OrderStatus status, User user) {
+    public void setOrderStatus(int orderId, OrderStatus status) {
         int statusCode = status.getCode();
-        if (user.role.equals(Role.ADMIN)) {
             try {
-                PreparedStatement sti = conn.prepareStatement("insert into ORDERS (STATUS) values (" + statusCode + ") where order_id = " + orderId);
+                PreparedStatement sti = conn.prepareStatement("update ORDERS  set STATUS = " + statusCode + " where order_id = " + orderId);
                 conn.commit();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-    }
+
 
     public OrderStatus placeOrder(HttpSession session) throws LowBalanceException {
         User user = (User) session.getAttribute("user");
@@ -88,22 +86,17 @@ public class OrderDAOImpl implements OrderDAO {
             e.printStackTrace();
         }
         try {
-            PreparedStatement orderIdGetStmt = conn.prepareStatement(String.valueOf(Statement.RETURN_GENERATED_KEYS));
-            try (ResultSet generatedKeys = orderIdGetStmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int orderId = generatedKeys.getInt(1);
-                    for (int i = 0; i < cart.getOrderedFlower().size(); i++) {
-                        orderDetailsWrite(String.valueOf(user.getId()), cart.getOrderedFlower().get(i), orderId);
-                    }
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT ORDER_ID  FROM ORDERS ORDER BY ORDER_ID  DESC LIMIT 1");
+            if (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                for (int i = 0; i < cart.getOrderedFlower().size(); i++) {
+                    orderDetailsWrite(String.valueOf(user.getId()), cart.getOrderedFlower().get(i), orderId);
                 }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         for (Flower flower : cart.getOrderedFlower()) {
             takeFlowers(flower);
         }
@@ -150,19 +143,38 @@ public class OrderDAOImpl implements OrderDAO {
         return null;
     }
 
-    public void takeFlowers(Flower flower) { //не работает, исправить
+    public void takeFlowers(Flower flower) {
         try {
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select amount from stock WHERE flower_id= " + flower.getFlowerId());
             if (rs.next()) {
                 int amount = rs.getInt("amount");
                 int newAmount = amount - flower.getAmount();
-                PreparedStatement sti = conn.prepareStatement("update STOCK set AMOUNT = " + newAmount +
-                        " where FLOWER_ID = " + flower.getFlowerId());
+                PreparedStatement sti = conn.prepareStatement("update STOCK set AMOUNT = " + String.valueOf(newAmount) +
+                        " where FLOWER_ID = " + String.valueOf(flower.getFlowerId()));
+                int raws = sti.executeUpdate();
+                System.out.println(raws);
+                conn.commit();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int getOrderCost(int orderId) {
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("select total_cost from orders WHERE order_id= " + orderId);
+            if (rs.next()) {
+                int sum = rs.getInt("total_cost");
+                return sum;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+
     }
 }
 

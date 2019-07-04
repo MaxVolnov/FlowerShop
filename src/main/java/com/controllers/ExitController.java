@@ -19,6 +19,7 @@ public class ExitController {
         session.removeAttribute("cart");
         session.removeAttribute("flower");
         session.removeAttribute("totalCost");
+        session.removeAttribute("userId");
         response.sendRedirect("/");
         return "login";
     }

@@ -1,6 +1,7 @@
 package com.daoimpl;
 
 import com.dao.DBConnector;
+import com.dao.OrderDAO;
 import com.dao.UserDAO;
 import com.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import java.sql.*;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
+    @Autowired
+    OrderDAO order;
     @Autowired
     DBConnector connector;
 
@@ -44,12 +47,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public void purchasePayment (HttpSession session) {
-        int payment = (int) session.getAttribute("totalCost");
+        int orderId = (int) session.getAttribute("paymentOrderId");
+        int payment = order.getOrderCost(orderId);
         User user = (User) session.getAttribute("user");
         user.balance = user.balance - payment;
         try {
-            PreparedStatement sti = conn.prepareStatement("insert into USERS (BALANCE ) values (?)");
-            sti.setInt(1, user.balance);
+            PreparedStatement sti = conn.prepareStatement("update USERS set BALANCE = " + user.balance + " where user_id = " + user.id);
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();

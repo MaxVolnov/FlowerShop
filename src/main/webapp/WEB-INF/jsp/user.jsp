@@ -62,13 +62,13 @@
             <tr>
                 <form action="/payment" method="post">
                     <td>
-                        <input type="hidden" name="flowerId" value="${order.orderId}">
+                        <input type="hidden" name="orderId" value="${order.orderId}">
                             ${order.orderId}
                     </td>
                     <td>${order.date}</td>
                     <td>${order.totalCost}</td>
                     <td>${order.status}</td>
-                    <td><input type="submit" value="Payment"></td>
+                    <td><input type="submit" value="Pay"></td>
                 </form>
             </tr>
         </c:forEach>
